@@ -3,9 +3,13 @@ package com.example.checkattendance;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,17 +20,25 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.checkattendance.Adapter.NotificationAdapter;
 import com.example.checkattendance.Data.Connecting_MSSQL;
+import com.example.checkattendance.Models.DetailMessage;
 import com.example.checkattendance.SharedPreferences.MyPreferences;
 import com.example.checkattendance.Singleton.MySingleton;
 import com.example.checkattendance.databinding.ActivityStaffBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Staff extends AppCompatActivity {
     private ActivityStaffBinding binding;
@@ -64,6 +76,7 @@ public class Staff extends AppCompatActivity {
                     bundle.putString("Email", resultSet.getString(6).trim());
                     bundle.putString("Image", resultSet.getString(7).trim());
                 }
+                MySingleton.getInstance().setPosition(bundle.getString("Position"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -89,6 +102,18 @@ public class Staff extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private ArrayList<String> parsedatetime(String noti) {
+        String[] temp = noti.split("=");
+        String time = temp[0];
+        String date = temp[1].substring(0, 10);
+        String message = temp[1].substring(10);
+        ArrayList<String> results = new ArrayList<>();
+        results.add(message);
+        results.add(date);
+        results.add(time);
+        return results;
     }
 
     @Override
@@ -150,6 +175,68 @@ public class Staff extends AppCompatActivity {
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
+                        }
+                    });
+
+                } else if (item.getTitle().toString().trim().equals("Notification")) {
+                    Dialog dialog = new Dialog(Staff.this);
+                    dialog.setContentView(R.layout.activity_notification_dialog);
+                    dialog.show();
+                    ImageView btn_close = dialog.findViewById(R.id.imageclose);
+                    //gọi database
+                    DatabaseReference ref = null;//khai báo địa chỉ là null
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://check-attendance-e80df-default-rtdb.asia-southeast1.firebasedatabase.app");
+                    if (MySingleton.getInstance().getPosition().equals("Security")) {
+                        ref = database.getReference("/Notification/Security");
+
+                    } else if (MySingleton.getInstance().getPosition().equals("Waitress")) {
+                        ref = database.getReference("/Notification/Waitress");
+
+                    } else if (MySingleton.getInstance().getPosition().equals("Order")) {
+                        ref = database.getReference("/Notification/Order");
+
+                    } else if (MySingleton.getInstance().getPosition().equals("Bartender")) {
+                        ref = database.getReference("/Notification/Bartender");
+                    }
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getValue() == null) {
+                                TextView txt_error = dialog.findViewById(R.id.error);
+                                txt_error.setVisibility(View.VISIBLE);
+                                ListView list_notification = dialog.findViewById(R.id.list_notification);
+                                list_notification.setVisibility(View.INVISIBLE);
+                            } else {
+                                ArrayList<DetailMessage> arrayList = new ArrayList<>();
+                                ListView list_notification = dialog.findViewById(R.id.list_notification);
+                                list_notification.setVisibility(View.VISIBLE);
+                                TextView txt_error = dialog.findViewById(R.id.error);
+                                txt_error.setVisibility(View.INVISIBLE);
+                                Object b = snapshot.getValue();
+                                Log.d("TAG", "Data: " + b);
+                                String d = b.toString().replace("{", "").replace("}", "").replace(", ", "\n");
+                                Log.d("TAG", "Data: " + d);
+                                String[] e = d.split("\n");
+                                arrayList.clear();
+                                for (int i = 0; i < e.length; i++) {
+                                    ArrayList<String> temp = parsedatetime(e[i]);
+                                    arrayList.add(new DetailMessage(temp.get(0), temp.get(1), temp.get(2)));
+                                }
+                                NotificationAdapter notificationAdapter = new NotificationAdapter(arrayList);
+                                list_notification.setAdapter(notificationAdapter);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("TAG", "Error: " + error);
+                        }
+                    });
+                    btn_close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
                         }
                     });
 

@@ -25,7 +25,6 @@ public class FirebaseCloudManager {
         this.db = FirebaseFirestore.getInstance();
         this.localTime = LocalTime.now();
         this.dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
     }
 
     public void adding_data() {

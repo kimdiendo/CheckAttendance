@@ -2,6 +2,8 @@ package com.example.checkattendance.Facade;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ public class ImageFacade {
     private ImageProxy imageProxy;
     private Bitmap preprocessed_image_bitmap;
     private final Detector detector;
+    private Bitmap only_face_image_bitmap;
     private final StorageManager storageManager;
     private final FaceRecognizer faceRecognizer;
 
@@ -39,6 +42,7 @@ public class ImageFacade {
         this.detector = new Detector();
         this.imageProxy = null;
         this.preprocessed_image_bitmap = null;
+        this.only_face_image_bitmap = null;
         this.storageManager = new StorageManager();
         this.faceRecognizer = new FaceRecognizer();
     }
@@ -51,7 +55,7 @@ public class ImageFacade {
 
     public String predict_input_face_data(Context context) {
         FirebaseCloudManager firebaseCloudManager = new FirebaseCloudManager();
-        Integer m = faceRecognizer.predict(context, preprocessed_image_bitmap);
+        int m = faceRecognizer.predict(context, only_face_image_bitmap);
         Log.d("chỉ số mục", String.valueOf(m));
         if (m == MySingleton.getInstance().getIndexing()) {
             firebaseCloudManager.adding_data();
@@ -94,5 +98,12 @@ public class ImageFacade {
 
     public Task<ListResult> check_face_data_user() {
         return storageManager.checkfacedata();
+
+    }
+
+    public void cropped_image(Rect rect) {
+        //tạo matrix
+        Matrix matrix = new Matrix();
+        only_face_image_bitmap = Bitmap.createBitmap(preprocessed_image_bitmap, rect.left, rect.top, rect.width(), rect.height(), matrix, true);
     }
 }

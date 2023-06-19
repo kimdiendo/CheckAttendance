@@ -28,7 +28,6 @@ public class Detector {
                         .build();
         this.detector = FaceDetection.getClient(this.highAccuracyOpts);
     }
-
     public Task<List<Face>> check_face_in_image(Bitmap bitmap_image) {
 
         InputImage image = InputImage.fromBitmap(bitmap_image, 0);

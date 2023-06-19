@@ -2,6 +2,7 @@ package com.example.checkattendance;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -105,6 +106,9 @@ public class CheckFace extends AppCompatActivity {
                                                                     @Override
                                                                     public void run() {
                                                                         Toast.makeText(getApplicationContext(), imageResult.getNotification1(), Toast.LENGTH_SHORT).show();
+                                                                        // lấy bounding box
+                                                                        Rect coordinates_face = task.getResult().get(0).getBoundingBox();
+                                                                        imageFacade.cropped_image(coordinates_face);
                                                                         Toast.makeText(getApplicationContext(), imageFacade.predict_input_face_data(getApplicationContext()), Toast.LENGTH_LONG).show();
                                                                     }
                                                                 });
