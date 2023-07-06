@@ -24,7 +24,7 @@ import com.example.checkattendance.Adapter.NotificationAdapter;
 import com.example.checkattendance.Data.Connecting_MSSQL;
 import com.example.checkattendance.Models.DetailMessage;
 import com.example.checkattendance.SharedPreferences.MyPreferences;
-import com.example.checkattendance.Singleton.MySingleton;
+import com.example.checkattendance.Singleton.StaffNote;
 import com.example.checkattendance.databinding.ActivityStaffBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +40,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Staff extends AppCompatActivity {
+public class ManageStaff extends AppCompatActivity {
     private ActivityStaffBinding binding;
     private static Connection connection_staff;
     private String username = "";
@@ -58,7 +58,7 @@ public class Staff extends AppCompatActivity {
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         password = intent.getStringExtra("password");
-        MySingleton.getInstance().setVariable(username);
+        StaffNote.getInstance().setID(username);
         if (connection_staff != null) {
             bundle = new Bundle();
             try {
@@ -76,7 +76,7 @@ public class Staff extends AppCompatActivity {
                     bundle.putString("Email", resultSet.getString(6).trim());
                     bundle.putString("Image", resultSet.getString(7).trim());
                 }
-                MySingleton.getInstance().setPosition(bundle.getString("Position"));
+                StaffNote.getInstance().setPosition(bundle.getString("Position"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -143,7 +143,7 @@ public class Staff extends AppCompatActivity {
                 } else if (item.getTitle().toString().equals("Attend Check")) {
                     navController.navigate(R.id.attendcheck);
                 } else if (item.getTitle().toString().equals("Log Out")) {
-                    Dialog dialog = new Dialog(Staff.this);
+                    Dialog dialog = new Dialog(ManageStaff.this);
                     dialog.setContentView(R.layout.activity_log_out);
                     Button btnYes = dialog.findViewById(R.id.btnCustomDialogYes);
                     Button btnNo = dialog.findViewById(R.id.btnCustomDialogNo);
@@ -179,23 +179,23 @@ public class Staff extends AppCompatActivity {
                     });
 
                 } else if (item.getTitle().toString().trim().equals("Notification")) {
-                    Dialog dialog = new Dialog(Staff.this);
+                    Dialog dialog = new Dialog(ManageStaff.this);
                     dialog.setContentView(R.layout.activity_notification_dialog);
                     dialog.show();
                     ImageView btn_close = dialog.findViewById(R.id.imageclose);
                     //gọi database
                     DatabaseReference ref = null;//khai báo địa chỉ là null
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://check-attendance-e80df-default-rtdb.asia-southeast1.firebasedatabase.app");
-                    if (MySingleton.getInstance().getPosition().equals("Security")) {
+                    if (StaffNote.getInstance().getPosition().equals("Security")) {
                         ref = database.getReference("/Notification/Security");
 
-                    } else if (MySingleton.getInstance().getPosition().equals("Waitress")) {
+                    } else if (StaffNote.getInstance().getPosition().equals("Waitress")) {
                         ref = database.getReference("/Notification/Waitress");
 
-                    } else if (MySingleton.getInstance().getPosition().equals("Order")) {
+                    } else if (StaffNote.getInstance().getPosition().equals("Order")) {
                         ref = database.getReference("/Notification/Order");
 
-                    } else if (MySingleton.getInstance().getPosition().equals("Bartender")) {
+                    } else if (StaffNote.getInstance().getPosition().equals("Bartender")) {
                         ref = database.getReference("/Notification/Bartender");
                     }
                     ref.addValueEventListener(new ValueEventListener() {
@@ -212,7 +212,7 @@ public class Staff extends AppCompatActivity {
                                 list_notification.setVisibility(View.VISIBLE);
                                 TextView txt_error = dialog.findViewById(R.id.error);
                                 txt_error.setVisibility(View.INVISIBLE);
-                                Object b = snapshot.getValue();
+                                Object b = snapshot.getValue(); // lấy giá trị message + datetime
                                 Log.d("TAG", "Data: " + b);
                                 String d = b.toString().replace("{", "").replace("}", "").replace(", ", "\n");
                                 Log.d("TAG", "Data: " + d);

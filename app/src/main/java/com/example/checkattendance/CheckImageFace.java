@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class CheckFace extends AppCompatActivity {
+public class CheckImageFace extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE_CAMERA = 100;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private PreviewView previewView;
@@ -50,7 +50,6 @@ public class CheckFace extends AppCompatActivity {
         setContentView(R.layout.activity_check_face);
         previewView = findViewById(R.id.viewFinder);
         btn1 = findViewById(R.id.checkButton);
-
         imageFacade = new ImageFacade();
         opencamera();
     }

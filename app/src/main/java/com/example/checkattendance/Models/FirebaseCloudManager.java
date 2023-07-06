@@ -2,7 +2,7 @@ package com.example.checkattendance.Models;
 
 import android.util.Log;
 
-import com.example.checkattendance.Singleton.MySingleton;
+import com.example.checkattendance.Singleton.StaffNote;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,7 +30,7 @@ public class FirebaseCloudManager {
     public void adding_data() {
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
-        user.put(MySingleton.getInstance().getVariable(), dateTimeFormatter.format(localTime));
+        user.put(StaffNote.getInstance().getID(), dateTimeFormatter.format(localTime));
         // Add a new document with a generated ID
         db.collection("Attendance")
                 .add(user)

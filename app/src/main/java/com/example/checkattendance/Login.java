@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         myPreferences = new MyPreferences(getApplicationContext());
         if (myPreferences.getKeyCheck() && !myPreferences.getPosition().equals("BOSS")) {
-            Intent intent_boss = new Intent(getApplicationContext(), Staff.class);
+            Intent intent_boss = new Intent(getApplicationContext(), ManageStaff.class);
             intent_boss.putExtra("username", myPreferences.getUsername());
             intent_boss.putExtra("password", myPreferences.getPassword());
             startActivity(intent_boss);
@@ -119,7 +119,7 @@ public class Login extends AppCompatActivity {
                                 myPreferences.saveUsername(username);
                                 myPreferences.savePassword(password);
                                 myPreferences.savePosition(account.getPosition());
-                                Intent intent = new Intent(getApplicationContext(), Staff.class);
+                                Intent intent = new Intent(getApplicationContext(), ManageStaff.class);
                                 intent.putExtra("username", username);
                                 intent.putExtra("password", password);
                                 startActivity(intent);

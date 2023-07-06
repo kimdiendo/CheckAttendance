@@ -14,7 +14,7 @@ import com.example.checkattendance.Models.FaceRecognizer;
 import com.example.checkattendance.Models.FirebaseCloudManager;
 import com.example.checkattendance.Models.ImagePreprocessor;
 import com.example.checkattendance.Models.StorageManager;
-import com.example.checkattendance.Singleton.MySingleton;
+import com.example.checkattendance.Singleton.StaffNote;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -57,7 +57,7 @@ public class ImageFacade {
         FirebaseCloudManager firebaseCloudManager = new FirebaseCloudManager();
         int m = faceRecognizer.predict(context, only_face_image_bitmap);
         Log.d("chỉ số mục", String.valueOf(m));
-        if (m == MySingleton.getInstance().getIndexing()) {
+        if (m == StaffNote.getInstance().getIndexing()) {
             firebaseCloudManager.adding_data();
             return "CheckAttedance Successfully";
         } else {
@@ -68,7 +68,7 @@ public class ImageFacade {
     public void uploading_image_storage() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference folderRef = storageRef.child(MySingleton.getInstance().getVariable().trim());
+        StorageReference folderRef = storageRef.child(StaffNote.getInstance().getID().trim());
         StorageReference imageRef = folderRef.child(String.valueOf(System.currentTimeMillis()).concat(".jpg"));
         // Convert bitmap to byte array
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -105,26 +105,6 @@ public class ImageFacade {
         //tạo matrix
         Matrix matrix = new Matrix();
         only_face_image_bitmap = Bitmap.createBitmap(preprocessed_image_bitmap, rect.left, rect.top, rect.width(), rect.height(), matrix, true);
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
-//        StorageReference folderRef = storageRef.child(MySingleton.getInstance().getVariable().trim());
-//        StorageReference imageRef = folderRef.child(String.valueOf(System.currentTimeMillis()).concat(".jpg"));
-//        // Convert bitmap to byte array
-//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//        only_face_image_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//        byte[] byteArray = stream.toByteArray();
-//        imageRef.putBytes(byteArray).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Log.e("Notice", "Uploading Successfully");
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.e("Notice", "Uploading Failed");
-//            }
-//
-//        });
-//    }
+
     }
 }

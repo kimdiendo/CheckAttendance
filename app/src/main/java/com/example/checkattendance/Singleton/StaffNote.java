@@ -1,29 +1,30 @@
 package com.example.checkattendance.Singleton;
 
-public class MySingleton {
-    private static MySingleton instance;
-    private String variable;
+public class StaffNote {
+    private static StaffNote instance;
+    private String ID;
     private int indexing;
     private String position;
 
-    private MySingleton() {
+    private StaffNote() {
+
     }
 
-    public static MySingleton getInstance() {
+    public static StaffNote getInstance() {
         if (instance == null) {
-            instance = new MySingleton();
+            instance = new StaffNote();
         }
         return instance;
     }
 
     private void process_index_user() {
-        if (variable.equals("NV01")) {
+        if (ID.equals("NV01")) {
             indexing = 3;
-        } else if (variable.equals("NV02")) {
+        } else if (ID.equals("NV02")) {
             indexing = 4;
-        } else if (variable.equals("NV04")) {
+        } else if (ID.equals("NV04")) {
             indexing = 5;
-        } else if (variable.equals("NV05")) {
+        } else if (ID.equals("NV05")) {
             indexing = 6;
         }
     }
@@ -36,16 +37,16 @@ public class MySingleton {
         this.position = position;
     }
 
-    public String getVariable() {
-        return variable;
+    public String getID() {
+        return ID;
     }
 
     public int getIndexing() {
         return indexing;
     }
 
-    public void setVariable(String variable) {
-        this.variable = variable;
+    public void setID(String variable) {
+        this.ID = variable;
         process_index_user();
     }
 }

@@ -28,11 +28,12 @@ public class Detector {
                         .build();
         this.detector = FaceDetection.getClient(this.highAccuracyOpts);
     }
+
     public Task<List<Face>> check_face_in_image(Bitmap bitmap_image) {
 
         InputImage image = InputImage.fromBitmap(bitmap_image, 0);
         Task<List<Face>> result = detector.process(image)
-                .addOnSuccessListener(
+                .addOnSuccessListener( // phương thức đến từ abstract class
                         new OnSuccessListener<List<Face>>() {
                             @Override
                             public void onSuccess(List<Face> faces) {
@@ -44,7 +45,7 @@ public class Detector {
                                 }
                             }
                         })
-                .addOnFailureListener(
+                .addOnFailureListener( // phương thức đến từ abstract class
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {

@@ -21,10 +21,10 @@
         android:theme="@style/Theme.CheckAttendance"
         tools:targetApi="31">
         <activity
-            android:name=".CheckFace"
+            android:name=".CheckImageFace"
             android:exported="false" />
         <activity
-            android:name=".Staff"
+            android:name=".ManageStaff"
             android:exported="false" />
         <activity
             android:name=".Login"

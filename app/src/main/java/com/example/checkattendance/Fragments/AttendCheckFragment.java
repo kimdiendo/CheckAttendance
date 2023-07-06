@@ -2,18 +2,15 @@ package com.example.checkattendance.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.camera.core.processing.SurfaceProcessorNode;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.checkattendance.Adapter.InformationAdapter;
+import androidx.fragment.app.Fragment;
+
 import com.example.checkattendance.AddImage;
-import com.example.checkattendance.CheckFace;
+import com.example.checkattendance.CheckImageFace;
 import com.example.checkattendance.R;
 
 /**
@@ -33,6 +30,7 @@ public class AttendCheckFragment extends Fragment {
     private String mParam2;
     private Button btn_add;
     private Button btn_check;
+
     public AttendCheckFragment() {
         // Required empty public constructor
     }
@@ -68,19 +66,19 @@ public class AttendCheckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_attend_check, container, false);
+        View view = inflater.inflate(R.layout.fragment_attend_check, container, false);
         btn_add = view.findViewById(R.id.btn_add);
         btn_check = view.findViewById(R.id.btn_check);
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  startActivity(new Intent(getContext() , AddImage.class));
+                startActivity(new Intent(getContext(), AddImage.class));
             }
         });
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   startActivity(new Intent(getContext() , CheckFace.class));
+                startActivity(new Intent(getContext(), CheckImageFace.class));
             }
         });
 
