@@ -223,6 +223,7 @@ public class ManageStaff extends AppCompatActivity {
                                     arrayList.add(new DetailMessage(temp.get(0), temp.get(1), temp.get(2)));
                                 }
                                 NotificationAdapter notificationAdapter = new NotificationAdapter(arrayList);
+                                notificationAdapter.notifyDataSetChanged();
                                 list_notification.setAdapter(notificationAdapter);
                             }
 

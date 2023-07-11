@@ -19,6 +19,5 @@ public class StorageManager {
         StorageReference storageRef = storage.getReference();
         StorageReference folderRef = storageRef.child(StaffNote.getInstance().getID().trim());
         return folderRef.listAll();
-
     }
 }
