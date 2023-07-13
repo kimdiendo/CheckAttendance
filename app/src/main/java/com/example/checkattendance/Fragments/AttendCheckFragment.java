@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.checkattendance.AddImage;
 import com.example.checkattendance.CheckImageFace;
 import com.example.checkattendance.R;
 
@@ -67,14 +66,8 @@ public class AttendCheckFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_attend_check, container, false);
-        btn_add = view.findViewById(R.id.btn_add);
         btn_check = view.findViewById(R.id.btn_check);
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddImage.class));
-            }
-        });
+
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

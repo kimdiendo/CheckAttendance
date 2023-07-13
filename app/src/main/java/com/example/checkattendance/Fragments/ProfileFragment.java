@@ -1,9 +1,11 @@
 package com.example.checkattendance.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.checkattendance.Adapter.InformationAdapter;
+import com.example.checkattendance.AddImage;
 import com.example.checkattendance.Models.Detail_Profile;
 import com.example.checkattendance.R;
 import com.squareup.picasso.Picasso;
@@ -39,6 +42,7 @@ public class ProfileFragment extends Fragment {
     private String Gender = "";
     private String PhoneNumber = "";
     private String EmailAddress = "";
+    private ImageButton btn_add_image;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -78,6 +82,7 @@ public class ProfileFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         TextView txt = view.findViewById(R.id.textView2);
+        btn_add_image = view.findViewById(R.id.add_image);
         ImageView imageView = view.findViewById(R.id.roundedImageViewpersonal);
         Picasso.get().load(getArguments().getString("Image").trim()).into(imageView);
         txt.setText(getArguments().getString("Name"));
@@ -98,6 +103,12 @@ public class ProfileFragment extends Fragment {
         informationAdapter.notifyDataSetChanged();
         ListView listView = view.findViewById(R.id.list_item);
         listView.setAdapter(informationAdapter);
+        btn_add_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AddImage.class));
+            }
+        });
         return view;
     }
 }

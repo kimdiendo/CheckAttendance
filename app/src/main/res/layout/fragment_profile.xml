@@ -11,16 +11,31 @@
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1035dp">
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/add_image"
+            android:layout_width="62dp"
+            android:layout_height="61dp"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/baseline_add_a_photo_24"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.951"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+        </ImageButton>
 
         <ImageView
             android:id="@+id/imageviewpersonal"
-            android:layout_width="409dp"
-            android:layout_height="243dp"
+            android:layout_width="392dp"
+            android:layout_height="280dp"
             android:background="@drawable/background_for_profile"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            tools:layout_editor_absoluteY="-5dp" />
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/roundedImageViewpersonal"
@@ -28,14 +43,14 @@
             android:layout_height="146dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/person"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="@+id/imageviewpersonal"
-            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageviewpersonal"
             app:riv_border_color="@color/white"
             app:riv_border_width="10dp"
+            android:src="@drawable/person"
             app:riv_oval="true"></com.makeramen.roundedimageview.RoundedImageView>
 
         <TextView
@@ -49,12 +64,14 @@
             android:text="Bernado Silva"
             android:textSize="15dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/imageviewpersonal"
             app:layout_constraintTop_toBottomOf="@+id/roundedImageViewpersonal"
             tools:ignore="MissingConstraints,TextSizeCheck" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="380dp"
             android:layout_height="500dp"
             android:layout_marginTop="8dp"
@@ -75,6 +92,7 @@
                 android:textSize="30dp"
                 android:textStyle="bold"></TextView>
 
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -85,5 +103,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="430dp"></ListView>
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
