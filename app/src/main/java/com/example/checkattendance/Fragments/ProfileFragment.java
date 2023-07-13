@@ -1,15 +1,14 @@
 package com.example.checkattendance.Fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.checkattendance.Adapter.InformationAdapter;
 import com.example.checkattendance.Models.Detail_Profile;
@@ -34,12 +33,12 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ArrayList<Detail_Profile> arrayList;
-    private String Account_name="";
-    private String Password="";
-    private String Position="";
-    private String Gender="";
-    private String PhoneNumber="";
-    private String EmailAddress="";
+    private String Account_name = "";
+    private String Password = "";
+    private String Position = "";
+    private String Gender = "";
+    private String PhoneNumber = "";
+    private String EmailAddress = "";
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -83,21 +82,21 @@ public class ProfileFragment extends Fragment {
         Picasso.get().load(getArguments().getString("Image").trim()).into(imageView);
         txt.setText(getArguments().getString("Name"));
         Account_name = getArguments().getString("AccountName");
-        Password =getArguments().getString("Password");
-        Position =getArguments().getString("Position" );
+        Password = getArguments().getString("Password");
+        Position = getArguments().getString("Position");
         Gender = getArguments().getString("Gender");
-        PhoneNumber = getArguments().getString("PhoneNumber" );
+        PhoneNumber = getArguments().getString("PhoneNumber");
         EmailAddress = getArguments().getString("Email");
         arrayList = new ArrayList<>();
-        arrayList.add(new Detail_Profile(R.drawable.accountname,"Account name:", Account_name));
-        arrayList.add(new Detail_Profile(R.drawable.padlockpassword,"Password:", Password));
-        arrayList.add(new Detail_Profile(R.drawable.role,"Position:",Position));
-        arrayList.add(new Detail_Profile(R.drawable.gender,"Gender:",Gender));
-        arrayList.add(new Detail_Profile(R.drawable.phonenumber,"Phone Number:",PhoneNumber));
-        arrayList.add(new Detail_Profile(R.drawable.email,"Email Address:",EmailAddress));
-        ListView listView = view.findViewById(R.id.list_item);
+        arrayList.add(new Detail_Profile(R.drawable.accountname, "Account name:", Account_name));
+        arrayList.add(new Detail_Profile(R.drawable.padlockpassword, "Password:", Password));
+        arrayList.add(new Detail_Profile(R.drawable.role, "Position:", Position));
+        arrayList.add(new Detail_Profile(R.drawable.gender, "Gender:", Gender));
+        arrayList.add(new Detail_Profile(R.drawable.phonenumber, "Phone Number:", PhoneNumber));
+        arrayList.add(new Detail_Profile(R.drawable.email, "Email Address:", EmailAddress));
         InformationAdapter informationAdapter = new InformationAdapter(arrayList);
         informationAdapter.notifyDataSetChanged();
+        ListView listView = view.findViewById(R.id.list_item);
         listView.setAdapter(informationAdapter);
         return view;
     }

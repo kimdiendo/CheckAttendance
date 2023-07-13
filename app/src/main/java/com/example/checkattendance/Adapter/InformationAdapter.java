@@ -7,15 +7,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.checkattendance.Models.Detail_Profile;
+import com.example.checkattendance.Models.ServiceShowList;
 import com.example.checkattendance.R;
 
 import java.util.ArrayList;
 
 public class InformationAdapter extends BaseAdapter {
-    final ArrayList<Detail_Profile> arrayList ;
+    final ArrayList<Detail_Profile> arrayList;
+    private ServiceShowList serviceShowList;
+
     public InformationAdapter(ArrayList<Detail_Profile> arrayList) {
         this.arrayList = arrayList;
     }
+
     @Override
     public int getCount() {
         return arrayList.size();
@@ -25,9 +29,9 @@ public class InformationAdapter extends BaseAdapter {
     public Object getItem(int i) {
         return arrayList.get(i);
     }
-    private  class ViewHolder
-    {
-        TextView txt1 , txt2;
+
+    private class ViewHolder {
+        TextView txt1, txt2;
         ImageView img;
     }
 
@@ -38,10 +42,9 @@ public class InformationAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        View viewproduct ;//View hien thi san pham tu arrayList
-        ViewHolder viewHolder ;//lưu thông tin ánh xạ
-        if(view == null)
-        {
+        View viewproduct;//View hien thi san pham tu arrayList
+        ViewHolder viewHolder;//lưu thông tin ánh xạ
+        if (view == null) {
             //viewproduct= View.inflate(viewGroup.getContext() , R.layout.actionn jj njn , null);
             viewproduct = View.inflate(viewGroup.getContext(), R.layout.detail_profile, null);
             viewHolder = new ViewHolder();
@@ -50,8 +53,8 @@ public class InformationAdapter extends BaseAdapter {
             viewHolder.img = viewproduct.findViewById(R.id.image);
             viewproduct.setTag(viewHolder); // Tạo tag để nắm viewholder mà lưu trữ các thông tin ánh xạ để dùng cho lần sau.
 
-        }else
-        {
+
+        } else {
             viewproduct = view;
             viewHolder = (ViewHolder) viewproduct.getTag();
         }
@@ -60,6 +63,11 @@ public class InformationAdapter extends BaseAdapter {
         viewHolder.txt2.setText(product.getName2());
         viewHolder.img.setImageResource(product.getImageView());
         return viewproduct;
+    }
+
+    public void transfer(View view) {
+        if (view != null)
+            serviceShowList.receive(view);
     }
 }
 
